@@ -32,6 +32,7 @@ import GenerateThumbnail from "@/components/GenerateThumbnail"
 import GeneratePodcast from "@/components/GeneratePodcast"
 import { Loader } from "lucide-react"
 import { Id } from "@/convex/_generated/dataModel"
+import { useToast } from "@/components/ui/use-toast"
 
 const voiceCategories = [
   'alloy', "shimmer", "nova", "echo", "fable", "onyx",
@@ -59,8 +60,8 @@ const CreatePodcast = () => {
   
   const [voiceType, setVoiceType] = useState<string | null>(null)
   const [ voicePromt, setVoicePromt] = useState("")
- 
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { toast } = useToast()
  
   //1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -73,15 +74,24 @@ const CreatePodcast = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
-    setIsSubmitting(true)
-    // Simulate async submission
-    setTimeout(() => {
+    try{
+      setIsSubmitting(true)
+      if(!audioUrl || !imageUrl || !voiceType){
+        toast({
+          title: "Please generate audio and image"
+        })
+        setIsSubmitting(false)
+        throw new Error('Please generate audio and image')
+      }
+      // await CreatePodcast
+    }catch(error){
+      console.log(error)
+      toast({
+        title: "Error",
+        variant: "destructive"
+      })
       setIsSubmitting(false)
-      alert("Form submitted successfully!")
-    }, 2000)
+    }
   }
 
   return (
