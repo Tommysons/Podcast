@@ -56,7 +56,7 @@ const EmblaCarousel = ({ fansLikeDetail }: CarouselProps) => {
           </figure>
         ))}
       </div>
-      {/* <div className="flex justify-center gap-2">
+      <div className="flex justify-center gap-2">
         {scrollSnaps.map((_, index) => (
           <DotButton
             key={index}
@@ -64,7 +64,7 @@ const EmblaCarousel = ({ fansLikeDetail }: CarouselProps) => {
             selected={index === selectedIndex}
             />
           ))}
-      </div> */}
+      </div>
     </section>
   )
 }
